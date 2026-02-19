@@ -12,6 +12,10 @@ RL-based swing-up and balancing for single and double inverted pendulums in Isaa
 
 All tasks use 1D action (force on cart). Only the cart joint is actuated.
 
+## Training Graphs
+
+[View full training report on Weights & Biases](https://wandb.ai/aadithya-indian-institute-of-technology-jodhpur/cartpole_rl/reports/Assignment--VmlldzoxNTk3OTc4NQ?accessToken=6jagul5ch047pm9vpeow8p4ris992qa38a55olp0whni05zayzcjas4dd3zr3bay)
+
 ## Demos
 
 ### Single Pole

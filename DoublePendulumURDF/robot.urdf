@@ -1,0 +1,138 @@
+<?xml version="1.0" ?>
+<!-- Generated using onshape-to-robot -->
+<!-- Onshape https://cad.onshape.com/documents/23ff1b6c89f9297b7a0e9b8a/w/75eb753e20548f3cea30a049/e/ffe591d2a8c2ca2f335417a0 -->
+<robot name="DoublePendulum">
+  <material name="rail_material">
+    <color rgba="1.0 0.84 0.3 1"/>
+  </material>
+  <material name="cart_material">
+    <color rgba="0.75 0.75 0.75 1"/>
+  </material>
+  <material name="arm_material">
+    <color rgba="0.2 0.3 0.7 1"/>
+  </material>
+  <material name="arm_2_material">
+    <color rgba="0.8 0.2 0.1 1"/>
+  </material>
+  <material name="payload_material">
+    <color rgba="0.11 0.33 0 1"/>
+  </material>
+  <!-- Link rail -->
+  <link name="rail">
+    <inertial>
+      <origin xyz="0.33764 -0.0920018 0.120438" rpy="0 0 0"/>
+      <mass value="61.824"/>
+      <inertia ixx="0.0164864" ixy="0" ixz="0" iyy="20.6162" iyz="0" izz="20.6162"/>
+    </inertial>
+    <!-- Part rail (scaled 8x in x to match ±3m slide range) -->
+    <visual>
+      <origin xyz="0.33764 -0.0720018 0.120438" rpy="0 -0 0"/>
+      <geometry>
+        <mesh filename="package://assets/rail.stl" scale="3.5 1 1"/>
+      </geometry>
+      <material name="rail_material">
+        <color rgba="1.0 0.84 0.0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.33764 -0.0720018 0.120438" rpy="0 -0 0"/>
+      <geometry>
+        <mesh filename="package://assets/rail.stl" scale="1 1 1"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- Link cart -->
+  <link name="cart">
+    <inertial>
+      <origin xyz="-0.02 -1.11022e-16 -0.04" rpy="0 0 0"/>
+      <mass value="0.563328"/>
+      <inertia ixx="0.000675994" ixy="0" ixz="0" iyy="0.000675994" iyz="-6.51479e-21" izz="0.000751104"/>
+    </inertial>
+    <!-- Part cart -->
+    <visual>
+      <origin xyz="0.02 0.04 -0.04" rpy="-1.5708 -1.5708 0"/>
+      <geometry>
+        <mesh filename="package://assets/cart.stl"/>
+      </geometry>
+      <material name="cart_material">
+        <color rgba="0.75 0.75 0.75 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.02 0.04 -0.04" rpy="-1.5708 -1.5708 0"/>
+      <geometry>
+        <mesh filename="package://assets/cart.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- Link arm -->
+  <link name="arm">
+    <inertial>
+      <origin xyz="1.58294e-17 -0.19 -0.005" rpy="0 0 0"/>
+      <mass value="0.117337"/>
+      <inertia ixx="0.00156495" ixy="-3.74755e-20" ixz="1.24579e-50" iyy="4.88981e-06" iyz="1.65186e-51" izz="0.00156788"/>
+    </inertial>
+    <!-- Part arm -->
+    <visual>
+      <origin xyz="0.00038825 -0.285581 -0.01" rpy="-1.5708 -7.16195e-48 -2.4095e-17"/>
+      <geometry>
+        <mesh filename="package://assets/arm.stl"/>
+      </geometry>
+      <material name="arm_material">
+        <color rgba="0.6 0.2 0.2 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.00038825 -0.285581 -0.01" rpy="-1.5708 -7.16195e-48 -2.4095e-17"/>
+      <geometry>
+        <mesh filename="package://assets/arm.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- Link arm_2 -->
+  <link name="arm_2">
+    <inertial>
+      <origin xyz="-0.000260353 0.341568 0.00286989" rpy="0 0 0"/>
+      <mass value="0.568835"/>
+      <inertia ixx="0.00511402" ixy="3.4948e-06" ixz="3.89508e-07" iyy="0.0147778" iyz="-0.000176589" izz="0.0198639"/>
+    </inertial>
+    <!-- Part arm_2 -->
+    <visual>
+      <origin xyz="0.00038825 0.0944193 -0.01" rpy="-1.5708 3.64712e-48 2.32748e-18"/>
+      <geometry>
+        <mesh filename="package://assets/arm.stl"/>
+      </geometry>
+      <material name="arm_2_material">
+        <color rgba="0.8 0.2 0.1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.00038825 0.0944193 -0.01" rpy="-1.5708 3.64712e-48 2.32748e-18"/>
+      <geometry>
+        <mesh filename="package://assets/arm.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- Joint from arm to arm_2 -->
+  <joint name="revolute2" type="continuous">
+    <origin xyz="-8.32667e-17 -0.38 0" rpy="0.0 0.0 3.14159"/>
+    <parent link="arm"/>
+    <child link="arm_2"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <!-- Joint from cart to arm -->
+  <joint name="revolute" type="continuous">
+    <origin xyz="-0.06 -5.55112e-17 -0.04" rpy="-1.5708 -1.5708 -1.5708"/>
+    <parent link="cart"/>
+    <child link="arm"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <!-- Joint from rail to cart -->
+  <joint name="slide" type="prismatic">
+    <origin xyz="0.205986 -0.0720018 0.120438" rpy="1.5708 -0 1.5708"/>
+    <parent link="rail"/>
+    <child link="cart"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="400" velocity="100" lower="-5" upper="5"/>
+  </joint>
+</robot>

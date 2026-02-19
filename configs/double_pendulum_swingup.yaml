@@ -1,0 +1,54 @@
+train:
+  exp_name: "double_pendulum_swingup_1"
+  seed: 42
+  num_envs: 256
+  device: "cuda"
+
+ppo:
+  learning_rate: 3.0e-4
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_coef: 0.2
+  num_steps: 256
+  num_updates: 300
+  update_epochs: 5
+  num_minibatches: 32
+  max_grad_norm: 1.0
+  vf_coef: 1.0
+  ent_coef: 0.01
+  bound_loss_coef: 0.0001
+  norm_adv: true
+  norm_value: true
+  clip_vloss: true
+  anneal_lr: true
+  adaptive_scheduler: true
+  target_kl: 0.008
+
+network:
+  lstm_hidden_size: 64
+  lstm_num_layers: 1
+  actor_mlp_layers: [64, 32]
+  critic_mlp_layers: [64, 32]
+  activation: "elu"
+  use_layer_norm: true
+  log_std_min: -5.0
+  log_std_max: 2.0
+  value_clip_range: 5.0
+
+normalization:
+  enable_obs: true
+  obs_clip_range: 8.0
+  enable_rewards: false
+  reward_clip_range: 5.0
+
+logging:
+  wandb_enabled: true
+  wandb_project: "cartpole_rl"
+  wandb_group: null
+  checkpoint_dir: "scripts/inverted_pendulum/logs/checkpoints"
+  checkpoint_interval: 1
+  snapshot_divisor: 10
+
+curriculum:
+  enabled: false
+  stages: []
